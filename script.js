@@ -107,8 +107,9 @@ const roundVideosData = [
 const selectedPhotos = [
   { src: 'photos/photo_1@18-01-2026_17-40-08.jpg', caption: '18 января • Первые фото в чате' },
   { src: 'photos/photo_2@31-01-2026_10-09-21.jpg', caption: '31 января • Январский день' },
-  { src: 'photos/photo_21@06-03-2026_18-16-07.jpg', caption: '6 марта • Накануне праздника' },
+  { src: 'photos/photo_7@19-02-2026_18-46-59.jpg', caption: '19 февраля • Убегающий терафлю' },
   { src: 'photos/photo_20@01-03-2026_20-12-35.jpg', caption: '1 марта • Начало весны' },
+  { src: 'photos/photo_21@06-03-2026_18-16-07.jpg', caption: '6 марта • Накануне праздника' },
   { src: 'photos/photo_27@22-03-2026_21-27-03.jpg', caption: '22 марта • «Скажи что ты на диете»' },
   { src: 'photos/photo_37@12-04-2026_18-11-11.jpg', caption: '12 апреля • Пчелка в говне' },
   { src: 'photos/photo_40@02-05-2026_20-03-19.jpg', caption: '2 мая • Совместные катки' }
@@ -130,7 +131,7 @@ const quizQuestions = [
     q: 'Где мы с тобой впервые познакомились и списались?',
     options: [
       { text: 'В Mobile Legends (мобла)', correct: true },
-      { text: 'На дне рождения сестры в кафе', correct: false },
+      { text: 'Под комментарием в тт', correct: false },
       { text: 'В социальных сетях', correct: false },
       { text: 'Случайно в очереди за кофе', correct: false }
     ],
@@ -157,14 +158,14 @@ const quizQuestions = [
     explanation: 'Каждый раз, когда ты упоминала еду или готовку, обязательно звучало «Приятного аппетита!»'
   },
   {
-    q: 'Как Тимур в шутку поприветствовал тебя 7 марта в чате?',
+    q: 'В какую вторую игру кроме моблы мы вместе периодически залетаем?',
     options: [
-      { text: '«Здравствуйте тетя под именем Яся»', correct: true },
-      { text: '«Привет, бабуля»', correct: false },
-      { text: '«Добрый день, мадам»', correct: false },
-      { text: '«Салам алейкум, босс»', correct: false }
+      { text: 'Brawl Stars', correct: true },
+      { text: 'Genshin Impact', correct: false },
+      { text: 'PUBG Mobile', correct: false },
+      { text: 'Roblox', correct: false }
     ],
-    explanation: 'Да, и ты сразу ответила: «Почему не подросток то?!»'
+    explanation: 'Да, в Brawl Stars: «Ты в бравл играешь? Пошли играть!»'
   },
   {
     q: 'Примерно сколько сообщений в нашем с тобой чате?',
