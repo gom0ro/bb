@@ -179,8 +179,8 @@ const quizQuestions = [
       { text: '5 642', correct: false },
       { text: '800', correct: false }
     ],
-    explanation: 'В точку! 3 758 сообщений',
-    wrongExplanation: 'Не угадала! На самом деле у нас 3 758 сообщений'
+    explanation: 'Дап у нас 3 758 сообщений',
+    wrongExplanation: 'Не угадала,на самом деле у нас 3 758 сообщений'
   }
 ];
 
