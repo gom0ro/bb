@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>С Днём Рождения, Ясминка! 19 лет</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff5e7e'><path d='M12 6a2 2 0 0 0 2-2c0-.38-.1-.73-.29-1.03L12 1l-1.71 1.97c-.19.3-.29.65-.29 1.03 0 1.1.9 2 2 2zm10 13h-2v-4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v4H2c-.55 0-1 .45-1 1s.45 1 1 1h20c.55 0 1-.45 1-1s-.45-1-1-1zm-16-4h12v4H6v-4z'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+  <canvas id="fireworks-canvas"></canvas>
+  <canvas id="stars-canvas"></canvas>
+
+
+  <div class="floating-controls">
+    <button id="music-btn" class="control-btn" title="Включить или выключить музыку">
+      <span class="icon">
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+      </span>
+      <span class="status-pulse"></span>
+    </button>
+    <button id="confetti-btn" class="control-btn" title="Запустить салют!">
+      <span class="icon">
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 2l2.4 7.2h7.6l-6.2 4.5 2.4 7.3-6.2-4.5-6.2 4.5 2.4-7.3-6.2-4.5h7.6z"/></svg>
+      </span>
+    </button>
+  </div>
+
+
+  <div id="intro-overlay" class="intro-overlay">
+    <div class="intro-card">
+      <div class="gift-box-anim" id="gift-trigger">
+        <div class="gift-glow"></div>
+        <div class="gift-emoji">
+          <svg class="gift-svg" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="boxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff758c"/>
+                <stop offset="100%" stop-color="#e11d48"/>
+              </linearGradient>
+              <linearGradient id="lidGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fda4af"/>
+                <stop offset="100%" stop-color="#f43f5e"/>
+              </linearGradient>
+              <linearGradient id="goldRibbon" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fffbeb"/>
+                <stop offset="35%" stop-color="#ffd166"/>
+                <stop offset="100%" stop-color="#f59e0b"/>
+              </linearGradient>
+            </defs>
+            <rect x="20" y="44" width="60" height="44" rx="6" fill="url(#boxGrad)"/>
+            <rect x="44" y="44" width="12" height="44" fill="url(#goldRibbon)"/>
+            <rect x="20" y="62" width="60" height="9" fill="url(#goldRibbon)"/>
+            <rect x="16" y="40" width="68" height="6" rx="2" fill="rgba(0,0,0,0.2)"/>
+            <rect x="15" y="32" width="70" height="15" rx="4" fill="url(#lidGrad)"/>
+            <rect x="44" y="32" width="12" height="15" fill="url(#goldRibbon)"/>
+            <path d="M48 30 C36 14, 18 18, 26 28 C32 34, 44 30, 48 32 Z" fill="url(#goldRibbon)"/>
+            <path d="M44 28 C36 20, 26 21, 31 27 Z" fill="#d97706" opacity="0.35"/>
+            <path d="M52 30 C64 14, 82 18, 74 28 C68 34, 56 30, 52 32 Z" fill="url(#goldRibbon)"/>
+            <path d="M56 28 C64 20, 74 21, 69 27 Z" fill="#d97706" opacity="0.35"/>
+            <rect x="44" y="26" width="12" height="10" rx="3" fill="#ffd166" stroke="#f59e0b" stroke-width="1.2"/>
+          </svg>
+        </div>
+      </div>
+      <span class="intro-badge">23 Октября • Особый день</span>
+      <h1 class="intro-title">Ясминка, для тебя кое-что есть</h1>
+      <button id="start-btn" class="btn-primary glow-pulse">
+        <span>
+          <svg class="svg-icon" viewBox="0 0 24 24" style="margin-right: 6px;"><path d="M12 2l2.4 7.2h7.6l-6.2 4.5 2.4 7.3-6.2-4.5-6.2 4.5 2.4-7.3-6.2-4.5h7.6z"/></svg>
+          Открыть сюрприз
+        </span>
+      </button>
+      <div class="sound-hint">
+        <svg class="svg-icon" viewBox="0 0 24 24" style="margin-right: 4px;"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+        Включи звук для лучшей атмосферы
+      </div>
+    </div>
+  </div>
+
+
+  <div id="main-content" class="main-content hidden">
+
+   
+    <header class="hero-section">
+      <div class="hero-sparkles"></div>
+      <div class="hero-container">
+        <div class="hero-tag">
+          <span class="sparkle-icon">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 2l2.4 7.2h7.6l-6.2 4.5 2.4 7.3-6.2-4.5-6.2 4.5 2.4-7.3-6.2-4.5h7.6z"/></svg>
+          </span>
+          Happy 19th Birthday
+          <span class="sparkle-icon">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 2l2.4 7.2h7.6l-6.2 4.5 2.4 7.3-6.2-4.5-6.2 4.5 2.4-7.3-6.2-4.5h7.6z"/></svg>
+          </span>
+        </div>
+        <h1 class="hero-title">
+          С Днём Рождения, <span class="gradient-text">Ясминка!</span>
+        </h1>
+        <div class="hero-action-buttons">
+          <a href="#cake-section" class="btn-secondary">
+            <svg class="svg-icon" viewBox="0 0 24 24" style="margin-right: 6px;"><path d="M12 6a2 2 0 0 0 2-2c0-.38-.1-.73-.29-1.03L12 1l-1.71 1.97c-.19.3-.29.65-.29 1.03 0 1.1.9 2 2 2zm10 13h-2v-4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v4H2c-.55 0-1 .45-1 1s.45 1 1 1h20c.55 0 1-.45 1-1s-.45-1-1-1zm-16-4h12v4H6v-4z"/></svg>
+            Задуть 19 свечей
+          </a>
+          <a href="#quiz-section" class="btn-secondary">
+            <svg class="svg-icon" viewBox="0 0 24 24" style="margin-right: 6px;"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg>
+            Тестик
+          </a>
+          <a href="#gallery-section" class="btn-secondary">
+            <svg class="svg-icon" viewBox="0 0 24 24" style="margin-right: 6px;"><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
+            Фотоплёнка
+          </a>
+          <a href="#letter-section" class="btn-secondary">
+            <svg class="svg-icon" viewBox="0 0 24 24" style="margin-right: 6px;"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            Личное послание
+          </a>
+        </div>
+      </div>
+    </header>
+
+    
+    <section id="cake-section" class="section cake-section">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-tag">Интерактивный торт</span>
+          <h2 class="section-title">Тебе сегодня <span class="gradient-text">19 лет!</span></h2>
+        </div>
+
+        <div class="cake-wrapper">
+          <div class="cake-display">
+            
+            <div class="candles-row" id="candles-container">
+       
+            </div>
+
+
+            <div class="cake-body">
+              <div class="cake-cream top-cream"></div>
+              <div class="cake-layer layer-top">
+                <span class="cake-text">19</span>
+              </div>
+              <div class="cake-cream mid-cream"></div>
+              <div class="cake-layer layer-bottom">
+                <div class="cake-decorations">
+                  <span class="cake-pearl"></span>
+                  <span class="cake-pearl"></span>
+                  <span class="cake-pearl"></span>
+                  <span class="cake-pearl"></span>
+                  <span class="cake-pearl"></span>
+                  <span class="cake-pearl"></span>
+                </div>
+              </div>
+              <div class="cake-plate"></div>
+            </div>
+          </div>
+
+          <div class="cake-controls">
+            <div class="candles-counter-box">
+              Осталось свечей: <span id="candles-left" class="highlight-num">19</span> / 19
+            </div>
+            <div class="cake-hint">Нажми на микрофон и подуй — свечи погаснут!</div>
+            <button id="mic-blow-btn" class="btn-mic-blow">
+              <span id="mic-btn-icon">
+                <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></svg>
+              </span>
+              <span id="mic-btn-label">Дунь в микрофон</span>
+            </button>
+            <div id="mic-level-bar" class="mic-level-bar hidden">
+              <div id="mic-level-fill" class="mic-level-fill"></div>
+            </div>
+            <button id="blow-all-candles-btn" class="btn-primary glow-pulse">
+              <span>
+                <svg class="svg-icon" viewBox="0 0 24 24" style="margin-right: 6px;"><path d="M14.5 17c0 1.65-1.35 3-3 3s-3-1.35-3-3h2c0 .55.45 1 1 1s1-.45 1-1-1-1-2-1H2v-2h7.5c1.65 0 3 1.35 3 3zm4.5-8c0-1.65-1.35-3-3-3s-3 1.35-3 3h2c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1H2v2h14c1.65 0 3-1.35 3-3z"/></svg>
+                Задуть все 19 свечей!
+              </span>
+            </button>
+          </div>
+
+
+          <div id="cake-wish-reveal" class="cake-wish-reveal hidden">
+            <div class="wish-card">
+              <div class="wish-icon">
+                <svg class="svg-icon icon-xl" style="fill: var(--accent-gold);" viewBox="0 0 24 24">
+                  <path d="M12 2l2.4 7.2h7.6l-6.2 4.5 2.4 7.3-6.2-4.5-6.2 4.5 2.4-7.3-6.2-4.5h7.6z"/>
+                </svg>
+              </div>
+              <h3>Все свечи задуты!</h3>
+              <p>Твоё желание обязательно исполнится в твои 19 лет. Пусть каждый день приносит улыбки, вдохновение и только приятные моменты.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="quiz-section" class="section quiz-section">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-tag">Тестик</span>
+          <h2 class="section-title">
+            <svg class="svg-icon" viewBox="0 0 24 24" style="margin-right: 8px; color: var(--secondary);"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg>
+            Кто лучше помнит наши моменты?
+          </h2>
+          <p class="section-desc">Небольшой тестик на знание наших диалогов, шуток и историй</p>
+        </div>
+
+        <div class="quiz-wrapper">
+          <div class="quiz-box" id="quiz-box">
+            <div class="quiz-progress-bar">
+              <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+            </div>
+            <div class="quiz-header">
+              <span id="quiz-step-label">Вопрос 1 из 7</span>
+              <span id="quiz-score-label">Очки: 0</span>
+            </div>
+
+            <div class="quiz-question-box">
+              <h3 id="quiz-question-text">Загрузка вопроса...</h3>
+            </div>
+
+            <div class="quiz-options-grid" id="quiz-options-container">
+
+            </div>
+
+            <div id="quiz-feedback" class="quiz-feedback hidden"></div>
+          </div>
+
+      
+          <div id="quiz-result-card" class="quiz-result-card hidden">
+            <div class="result-trophy">
+              <svg class="svg-icon icon-xl" style="fill: var(--accent-gold);" viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0 0 11 15.9V19H8v2h8v-2h-3v-3.1c1.8-.46 3.16-1.92 3.61-3.96C19.08 11.63 21 9.55 21 8V7c0-1.1-.9-2-2-2zm-14 3V7h2v3.8c-1.21-.4-2-1.52-2-2.8zm14 0c0 1.28-.79 2.4-2 2.8V7h2v1z"/></svg>
+            </div>
+            <h3>Отличный результат!</h3>
+            <p id="quiz-final-score" class="quiz-score-text">Ты набрала 7 из 7 баллов</p>
+            <div class="result-badge-awarded">
+              Официальный статус: «Лучший тиммейт»
+            </div>
+            <button id="retry-quiz-btn" class="btn-secondary">
+              <svg class="svg-icon" viewBox="0 0 24 24" style="margin-right: 6px;"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+              Пройти ещё раз
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="gallery-section" class="section gallery-section">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-tag">Фотоплёнка</span>
+          <h2 class="section-title">
+            <svg class="svg-icon" viewBox="0 0 24 24" style="margin-right: 8px; color: var(--primary);"><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
+            Кадры из нашего чата
+          </h2>
+        </div>
+
+        <div class="photos-masonry" id="photos-grid">
+ 
+        </div>
+
+  
+        <div id="photo-modal" class="modal hidden">
+          <div class="modal-overlay" id="photo-modal-overlay"></div>
+          <div class="photo-modal-dialog">
+            <button class="modal-close-btn" id="photo-modal-close">&times;</button>
+            <img id="modal-photo-img" src="" alt="Фото воспоминание">
+            <p id="modal-photo-caption" class="photo-caption"></p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+
+
+    <section id="compliments-section" class="section compliments-section">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-tag">😚</span>
+          <h2 class="section-title">
+            <svg class="svg-icon" viewBox="0 0 24 24" style="margin-right: 8px; color: var(--primary);"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            Словечки для тебя
+          </h2>
+          <p class="section-desc"></p>
+        </div>
+
+        <div class="compliment-machine">
+          <div class="compliment-bubble" id="compliment-text">
+            «Ты очень искренняя, и с тобой всегда легко и весело в разговоре.»
+          </div>
+          <button id="gen-compliment-btn" class="btn-primary heart-btn glow-pulse">
+            <span>
+              <svg class="svg-icon" viewBox="0 0 24 24" style="margin-right: 6px;"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              Получить улыбку
+            </span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="letter-section" class="section letter-section">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-tag">Самое главное</span>
+          <h2 class="section-title">Личное послание для тебя</h2>
+          <p class="section-desc">Нажми на сургучную печать, чтобы открыть конверт</p>
+        </div>
+
+        <div class="envelope-container">
+          <div class="envelope" id="envelope-trigger">
+            <div class="envelope-flap"></div>
+            <div class="wax-seal">
+              <span>19</span>
+            </div>
+            <div class="envelope-front">
+              <div class="envelope-stamp">
+                <svg class="svg-icon icon-lg" style="fill: #8d6e63;" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              </div>
+              <div class="envelope-to">
+                <span class="to-label">Кому:</span> Самой дорогой Ясминке<br>
+                <span class="to-label">От кого:</span> Тимура
+              </div>
+            </div>
+          </div>
+
+
+          <div id="unfolded-letter" class="unfolded-letter hidden">
+            <div class="letter-paper">
+              <div class="letter-corner top-left"></div>
+              <div class="letter-corner top-right"></div>
+              
+              <div class="letter-header">
+                <h3>Ясминка</h3>
+                <span class="letter-date">23 октября</span>
+              </div>
+
+              <div class="letter-body">
+                <p>
+                  Привет. С днем рождения тебя.
+                </p>
+                <p>
+                  Тебе сегодня исполняется 19 лет, и я очень рад, что могу тебя поздравить.
+                </p>
+                <p>
+                  Когда мы только списались в январе после игры, я даже не думал, что обычное знакомство перерастет в такое частое и теплое общение. С тобой всегда легко. Мне нравится, как мы можем часами играть, шутить про тетю Ясю, спорить о всяких пустяках или просто рассказывать друг другу, как прошел день. Ты очень искренняя, забавная и настоящая. С тобой рядом всегда уютно и спокойно.
+                </p>
+                <p>
+                  Я хочу пожелать тебе, чтобы у тебя все складывалось именно так, как ты сама этого хочешь. Чтобы учеба и дела не отнимали лишних сил, чтобы вокруг были только люди, которые тебя ценят, а поводов для улыбки было как можно больше. Пусть все твои планы и желания сбываются легко.
+                </p>
+                <p>
+                  Спасибо тебе за то, какая ты есть, за твою заботу и за то, что ты рядом.
+                </p>
+                <p class="letter-signature">
+                  С твоим днем. Пусть этот год будет для тебя особенным.<br>
+                  <span class="sign-name">Тимур</span>
+                </p>
+              </div>
+
+              <button id="close-letter-btn" class="btn-secondary" style="margin-top: 20px;">
+                Свернуть письмо
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <footer class="site-footer">
+      <div class="footer-container">
+        <p>Сделано специально для Ясминки</p>
+        <div class="footer-decor">
+          <svg class="svg-icon" style="color: var(--primary);" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </div>
+        <div class="footer-admin-link">
+          <a href="p4n3l_7x2k.html" class="admin-badge-link" title="История входов">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

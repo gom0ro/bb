@@ -1,0 +1,378 @@
+{
+  "title": "Чат с Ясминкой",
+  "total_messages": 3758,
+  "distinct_from_names": [
+    "Ясминка",
+    "-"
+  ],
+  "photos_count": 50,
+  "round_videos_count": 6,
+  "voices_count": 29,
+  "stickers_count": 346,
+  "round_videos": [
+    "round_video_messages/video.mp4",
+    "round_video_messages/video (1).mp4",
+    "round_video_messages/video (2).mp4",
+    "round_video_messages/video (3).mp4",
+    "round_video_messages/video (4).mp4",
+    "round_video_messages/video (5).mp4"
+  ],
+  "sample_photos": [
+    "photos/photo_1@18-01-2026_17-40-08.jpg",
+    "photos/photo_2@31-01-2026_10-09-21.jpg",
+    "photos/photo_3@01-02-2026_03-09-44.jpg",
+    "photos/photo_4@12-02-2026_16-43-14.jpg",
+    "photos/photo_5@14-02-2026_10-35-54.jpg",
+    "photos/photo_6@19-02-2026_18-28-48.jpg",
+    "photos/photo_7@19-02-2026_18-46-59.jpg",
+    "photos/photo_8@19-02-2026_18-50-33.jpg",
+    "photos/photo_9@19-02-2026_18-51-23.jpg",
+    "photos/photo_10@20-02-2026_19-57-16.jpg"
+  ],
+  "sample_voices": [
+    "voice_messages/audio_1@12-02-2026_19-02-12.ogg",
+    "voice_messages/audio_2@18-02-2026_21-10-26.ogg",
+    "voice_messages/audio_3@18-02-2026_21-12-53.ogg",
+    "voice_messages/audio_4@19-02-2026_15-50-58.ogg",
+    "voice_messages/audio_5@22-02-2026_14-53-42.ogg",
+    "voice_messages/audio_6@22-02-2026_15-13-38.ogg",
+    "voice_messages/audio_7@22-02-2026_15-30-52.ogg",
+    "voice_messages/audio_8@22-02-2026_19-54-11.ogg",
+    "voice_messages/audio_9@19-03-2026_14-19-50.ogg",
+    "voice_messages/audio_10@19-03-2026_15-55-13.ogg"
+  ],
+  "sample_messages": [
+    {
+      "from": "Ясминка",
+      "date": "13 January 2026",
+      "time": "",
+      "text": "Привет"
+    },
+    {
+      "from": "-",
+      "date": "13 January 2026",
+      "time": "",
+      "text": "я тимур если что"
+    },
+    {
+      "from": "-",
+      "date": "13 January 2026",
+      "time": "",
+      "text": "не знаю"
+    },
+    {
+      "from": "-",
+      "date": "13 January 2026",
+      "time": "",
+      "text": "маленький"
+    },
+    {
+      "from": "Ясминка",
+      "date": "13 January 2026",
+      "time": "",
+      "text": "Ты с моблы правильно же"
+    },
+    {
+      "from": "Ясминка",
+      "date": "13 January 2026",
+      "time": "",
+      "text": "А ник какой"
+    },
+    {
+      "from": "-",
+      "date": "13 January 2026",
+      "time": "",
+      "text": "alex g"
+    },
+    {
+      "from": "Ясминка",
+      "date": "13 January 2026",
+      "time": "",
+      "text": "Так и думала"
+    },
+    {
+      "from": "Ясминка",
+      "date": "13 January 2026",
+      "time": "",
+      "text": "Я разве не день назад тг дала"
+    },
+    {
+      "from": "Ясминка",
+      "date": "13 January 2026",
+      "time": "",
+      "text": "Или даже больше"
+    },
+    {
+      "from": "-",
+      "date": "13 January 2026",
+      "time": "",
+      "text": "даа,я забыл прост"
+    },
+    {
+      "from": "-",
+      "date": "18 January 2026",
+      "time": "",
+      "text": "Привет"
+    },
+    {
+      "from": "-",
+      "date": "18 January 2026",
+      "time": "",
+      "text": "пойдёшь играть?"
+    },
+    {
+      "from": "Ясминка",
+      "date": "18 January 2026",
+      "time": "",
+      "text": "Привееет"
+    },
+    {
+      "from": "Ясминка",
+      "date": "18 January 2026",
+      "time": "",
+      "text": "Я в кафе др сестры праздновала"
+    },
+    {
+      "from": "-",
+      "date": "18 January 2026",
+      "time": "",
+      "text": "приятного аппетита"
+    },
+    {
+      "from": "Ясминка",
+      "date": "21 January 2026",
+      "time": "",
+      "text": "Почему меня не зовееешь"
+    },
+    {
+      "from": "-",
+      "date": "21 January 2026",
+      "time": "",
+      "text": "боюсь что отклонишь"
+    },
+    {
+      "from": "Ясминка",
+      "date": "21 January 2026",
+      "time": "",
+      "text": "Ну ты дурак"
+    },
+    {
+      "from": "Ясминка",
+      "date": "21 January 2026",
+      "time": "",
+      "text": "Ну и играй сам"
+    },
+    {
+      "from": "-",
+      "date": "21 January 2026",
+      "time": "",
+      "text": "а ты будешь?"
+    },
+    {
+      "from": "Ясминка",
+      "date": "21 January 2026",
+      "time": "",
+      "text": "Ты же уже играешь"
+    },
+    {
+      "from": "Ясминка",
+      "date": "21 January 2026",
+      "time": "",
+      "text": "Я одна не люблю играть"
+    },
+    {
+      "from": "-",
+      "date": "21 January 2026",
+      "time": "",
+      "text": "я в лобби"
+    },
+    {
+      "from": "-",
+      "date": "21 January 2026",
+      "time": "",
+      "text": "тебя жду"
+    },
+    {
+      "from": "-",
+      "date": "21 January 2026",
+      "time": "",
+      "text": "расскажи анекдот"
+    },
+    {
+      "from": "Ясминка",
+      "date": "22 January 2026",
+      "time": "",
+      "text": "Я доиграла"
+    },
+    {
+      "from": "Ясминка",
+      "date": "22 January 2026",
+      "time": "",
+      "text": "И мы слили :("
+    },
+    {
+      "from": "-",
+      "date": "22 January 2026",
+      "time": "",
+      "text": "ты все¿"
+    },
+    {
+      "from": "Ясминка",
+      "date": "22 January 2026",
+      "time": "",
+      "text": "Ща нужно"
+    },
+    {
+      "from": "Ясминка",
+      "date": "23 January 2026",
+      "time": "",
+      "text": "Прости что вчера с тобой не пошла"
+    },
+    {
+      "from": "Ясминка",
+      "date": "23 January 2026",
+      "time": "",
+      "text": "Нас было 3"
+    },
+    {
+      "from": "Ясминка",
+      "date": "23 January 2026",
+      "time": "",
+      "text": "А в 4 нельзя запускать"
+    },
+    {
+      "from": "Ясминка",
+      "date": "24 January 2026",
+      "time": "",
+      "text": "Пойдем играть"
+    },
+    {
+      "from": "-",
+      "date": "24 January 2026",
+      "time": "",
+      "text": "могу 1"
+    },
+    {
+      "from": "Ясминка",
+      "date": "24 January 2026",
+      "time": "",
+      "text": "В чемпионат не хочешь?"
+    },
+    {
+      "from": "-",
+      "date": "24 January 2026",
+      "time": "",
+      "text": "райсинг?"
+    },
+    {
+      "from": "Ясминка",
+      "date": "24 January 2026",
+      "time": "",
+      "text": "Я пошутила"
+    },
+    {
+      "from": "Ясминка",
+      "date": "24 January 2026",
+      "time": "",
+      "text": "Я думала"
+    },
+    {
+      "from": "Ясминка",
+      "date": "24 January 2026",
+      "time": "",
+      "text": "Мне попадутся билеты"
+    }
+  ],
+  "longest_messages": [
+    {
+      "from": "-",
+      "date": "3 April 2026",
+      "time": "",
+      "text": "please make a crayon-style drawing similar to this Image.simplify the details so it look likes it was drawn by a 6-7 year old kid both character should have ^v^ shaped face, and the name should be written in child like handwriting"
+    },
+    {
+      "from": "Ясминка",
+      "date": "23 August 2026",
+      "time": "",
+      "text": "Ваш друг приглашает вас в Jańa Post! Используйте промокод и получите 500 ₸ бонусов за первую доставку. Ссылка на скачивание приложения: https://janapost.kz/app?promocode=PRQAJJQE Промокод: PRQAJJQE"
+    },
+    {
+      "from": "-",
+      "date": "17 August 2026",
+      "time": "",
+      "text": "почему? я спрашиваю не потому что не хочу слушать что то неприятное,а потому что мне интересно ,что с тобой случилось и почему тебе стало настолько плохо 🥲"
+    },
+    {
+      "from": "-",
+      "date": "24 March 2026",
+      "time": "",
+      "text": "Нажми на ссылку, чтобы вступить в команду игрока 求 | yakuza🪐 в Brawl Stars! https://link.brawlstars.com/invite/gameroom/ru?tag=XEUYK94M"
+    },
+    {
+      "from": "-",
+      "date": "31 January 2026",
+      "time": "",
+      "text": "у тебя есть такое крутое необычное и интересное приложение под названием тик ток"
+    },
+    {
+      "from": "-",
+      "date": "23 July 2026",
+      "time": "",
+      "text": "мне кажется ты специально рассказываешь так вкусно ,чтобы я напросился в гости"
+    },
+    {
+      "from": "Ясминка",
+      "date": "7 August 2026",
+      "time": "",
+      "text": "Потому что, ему по пути по идее меня с маминой работы забирать, но"
+    },
+    {
+      "from": "-",
+      "date": "7 August 2026",
+      "time": "",
+      "text": "может хоть бутерброд или или что нибудь быстрое найдеться"
+    },
+    {
+      "from": "Ясминка",
+      "date": "22 March 2026",
+      "time": "",
+      "text": "Типо лимитированная коллекция в честь праздника вышла"
+    },
+    {
+      "from": "Ясминка",
+      "date": "9 April 2026",
+      "time": "",
+      "text": "Что тебе я являюсь никем и особой значимости не имею"
+    },
+    {
+      "from": "Ясминка",
+      "date": "7 August 2026",
+      "time": "",
+      "text": "Поэтому я сказала, что он может меня закинуть к тете"
+    },
+    {
+      "from": "Ясминка",
+      "date": "9 April 2026",
+      "time": "",
+      "text": "Сегодня с мамой поссорились, но с ней мы помирились"
+    },
+    {
+      "from": "-",
+      "date": "22 February 2026",
+      "time": "",
+      "text": "у тебя подруга не спрашивает кому ты фото кидаешь?"
+    },
+    {
+      "from": "Ясминка",
+      "date": "7 August 2026",
+      "time": "",
+      "text": "А из-за того, что вторая ассистентка ушла раньше"
+    },
+    {
+      "from": "Ясминка",
+      "date": "22 March 2026",
+      "time": "",
+      "text": "Мы взяли еще для родителей и себе я взяла опять"
+    }
+  ]
+}
