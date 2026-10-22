@@ -1223,10 +1223,15 @@ function initCake() {
 
 
             let count;
-            if (avg < 28)      count = 1;
-            else if (avg < 42) count = Math.round(2 + (avg - 28) / 14);   
-            else if (avg < 60) count = Math.round(4 + (avg - 42) / 6);  
-            else               count = Math.min(10, Math.round(7 + (avg - 60) / 10)); 
+            if (avg < 24) {
+              count = Math.random() > 0.5 ? 2 : 3; // Легкий выдох: 2-3 свечи
+            } else if (avg < 38) {
+              count = Math.floor(5 + (avg - 24) * 0.35); // Средний выдох: 5-9 свечей
+            } else if (avg < 52) {
+              count = Math.floor(10 + (avg - 38) * 0.45); // Сильный выдох: 10-15 свечей
+            } else {
+              count = 19; // Очень сильный выдох: задувает сразу все оставшиеся свечи!
+            }
 
             let blown = 0;
             function blowNext() {
@@ -1235,13 +1240,12 @@ function initCake() {
               if (nextCandle) {
                 blowSingleCandle(nextCandle);
                 blown++;
-                setTimeout(blowNext, 80);
+                setTimeout(blowNext, 60);
               }
             }
             blowNext();
 
-           
-            const cooldownMs = avg < 35 ? 400 : avg < 55 ? 600 : 900;
+            const cooldownMs = avg < 30 ? 320 : avg < 48 ? 480 : 700;
             setTimeout(() => { blowCooldown = false; }, cooldownMs);
           }
         }
