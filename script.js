@@ -135,7 +135,8 @@ const quizQuestions = [
       { text: 'В социальных сетях', correct: false },
       { text: 'Случайно в очереди за кофе', correct: false }
     ],
-    explanation: 'Да 😽'
+    explanation: 'Да, в Mobile Legends! 13 января ты написала: «Ты с моблы правильно же?»',
+    wrongExplanation: 'Почти, но нет! Мы познакомились в Mobile Legends'
   },
   {
     q: 'Как ты думаешь, какое прозвище мне нравится больше?',
@@ -145,7 +146,8 @@ const quizQuestions = [
       { text: '«Шалость»', correct: false },
       { text: '«Солнышко»', correct: false }
     ],
-    explanation: 'Да, ты как миньончик '
+    explanation: 'Да, ты как миньончик',
+    wrongExplanation: 'Не угадала! Больше всего мне нравится «Ясминьон»'
   },
   {
     q: 'Какая фраза от Тимура звучала в нашем чате чаще всего ?',
@@ -155,7 +157,8 @@ const quizQuestions = [
       { text: '«Я пошел спать»', correct: false },
       { text: '«Где тиммейты?!»', correct: false }
     ],
-    explanation: 'Конечно же «Приятного аппетита!»'
+    explanation: 'Конечно же «Приятного аппетита!»',
+    wrongExplanation: 'Мимо! Чаще всего в чате звучало «Приятного аппетита!»'
   },
   {
     q: 'В какую вторую игру кроме моблы мы вместе периодически залетаем?',
@@ -165,7 +168,8 @@ const quizQuestions = [
       { text: 'Genshin Impact', correct: false },
       { text: 'PUBG Mobile', correct: false }
     ],
-    explanation: 'Да, это Роплакс'
+    explanation: 'Да, это Роблокс!',
+    wrongExplanation: 'Не-а, мы же вместе залетаем в Роблокс!'
   },
   {
     q: 'Примерно сколько сообщений в нашем с тобой чате?',
@@ -175,7 +179,8 @@ const quizQuestions = [
       { text: '5 642', correct: false },
       { text: '800', correct: false }
     ],
-    explanation: 'Вроде много, но на самом деле не так уж и много 😽'
+    explanation: 'В точку! 3 758 сообщений',
+    wrongExplanation: 'Не угадала! На самом деле у нас 3 758 сообщений'
   }
 ];
 
@@ -1512,14 +1517,14 @@ function initQuiz() {
       btn.innerHTML = `<span>${opt.text}</span> <span class="opt-status"></span>`;
 
       btn.addEventListener('click', () => {
-        handleOptionClick(btn, opt, current.explanation);
+        handleOptionClick(btn, opt, current);
       });
 
       optionsGrid.appendChild(btn);
     });
   }
 
-  function handleOptionClick(selectedBtn, option, explanation) {
+  function handleOptionClick(selectedBtn, option, questionObj) {
     const allBtns = optionsGrid.querySelectorAll('.quiz-option-btn');
     allBtns.forEach(b => b.disabled = true);
 
@@ -1528,13 +1533,20 @@ function initQuiz() {
       state.quizScore++;
       scoreLabel.textContent = `Очки: ${state.quizScore}`;
       feedback.className = 'quiz-feedback success';
-      feedback.innerHTML = `<svg class="svg-icon" style="color: #10b981; margin-right: 4px;" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> <strong>Правильно!</strong> ${explanation}`;
+      feedback.innerHTML = `<svg class="svg-icon" style="color: #10b981; margin-right: 4px;" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> <strong>Правильно!</strong> ${questionObj.explanation}`;
       soundEngine.playPop();
       fireworksEngine.launchConfetti(window.innerWidth / 2, window.innerHeight / 2, 25);
     } else {
       selectedBtn.classList.add('wrong');
+      const correctOpt = questionObj.options.find(o => o.correct);
+      allBtns.forEach(b => {
+        if (correctOpt && b.textContent.trim().startsWith(correctOpt.text.trim())) {
+          b.classList.add('correct');
+        }
+      });
       feedback.className = 'quiz-feedback error';
-      feedback.innerHTML = `<svg class="svg-icon" style="color: #ef4444; margin-right: 4px;" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg> <strong>Не совсем!</strong> ${explanation}`;
+      const wrongMsg = questionObj.wrongExplanation || questionObj.explanation;
+      feedback.innerHTML = `<svg class="svg-icon" style="color: #ef4444; margin-right: 4px;" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg> <strong>Не совсем!</strong> ${wrongMsg}`;
     }
 
     feedback.classList.remove('hidden');
