@@ -1,0 +1,9 @@
+{
+  "name": "yasmina-birthday",
+  "version": "1.0.0",
+  "description": "Birthday celebration site",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
