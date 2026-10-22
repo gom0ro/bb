@@ -708,6 +708,113 @@ const flowerBloomEngine = (function() {
     if (!animationId) loop();
   }
 
+  let onCompleteCallback = null;
+
+  function launchBloom(originX, originY, onComplete) {
+    if (!canvas) init();
+    if (!canvas) return;
+
+    onCompleteCallback = onComplete || null;
+    resize();
+    flowers = [];
+    petals = [];
+    isRunning = true;
+    startTimestamp = performance.now();
+
+    const ox = originX || width / 2;
+    const oy = originY || height / 2;
+
+    const types = [
+      { type: 'peony', variant: 0 },
+      { type: 'peony', variant: 1 },
+      { type: 'peony', variant: 2 },
+      { type: 'peony', variant: 3 },
+      { type: 'sunflower' },
+      { type: 'blue' },
+      { type: 'sakura' }
+    ];
+
+    const cols = Math.max(7, Math.floor(width / 110));
+    const rows = Math.max(8, Math.floor(height / 110));
+    const cellW = width / cols;
+    const cellH = height / rows;
+
+    for (let c = 0; c < cols; c++) {
+      for (let r = 0; r < rows; r++) {
+        const cx = (c + 0.5) * cellW + (Math.random() - 0.5) * cellW * 0.75;
+        const cy = (r + 0.5) * cellH + (Math.random() - 0.5) * cellH * 0.75;
+
+        const dist = Math.hypot(cx - ox, cy - oy);
+        const maxDist = Math.hypot(width, height);
+        const delay = (dist / maxDist) * 750 + Math.random() * 120;
+
+        const tObj = types[Math.floor(Math.random() * types.length)];
+        const baseR = Math.random() * 32 + 42;
+
+        flowers.push({
+          x: cx,
+          y: cy,
+          r: baseR,
+          rotation: Math.random() * Math.PI * 2,
+          rotSpeed: (Math.random() - 0.5) * 0.008,
+          phase: Math.random() * Math.PI * 2,
+          delay: delay,
+          duration: Math.random() * 200 + 480,
+          type: tObj.type,
+          variant: tObj.variant || 0,
+          driftX: (Math.random() - 0.5) * 20,
+          driftY: Math.random() * 40 + 10
+        });
+      }
+    }
+
+    const extraCount = Math.floor(cols * rows * 0.35);
+    for (let i = 0; i < extraCount; i++) {
+      const cx = Math.random() * width;
+      const cy = Math.random() * height;
+      const dist = Math.hypot(cx - ox, cy - oy);
+      const delay = (dist / Math.hypot(width, height)) * 650 + Math.random() * 200;
+      const tObj = types[Math.floor(Math.random() * types.length)];
+      const baseR = Math.random() * 40 + 55;
+
+      flowers.push({
+        x: cx,
+        y: cy,
+        r: baseR,
+        rotation: Math.random() * Math.PI * 2,
+        rotSpeed: (Math.random() - 0.5) * 0.008,
+        phase: Math.random() * Math.PI * 2,
+        delay: delay,
+        duration: Math.random() * 200 + 500,
+        type: tObj.type,
+        variant: tObj.variant || 0,
+        driftX: (Math.random() - 0.5) * 25,
+        driftY: Math.random() * 50 + 15
+      });
+    }
+
+    flowers.sort((a, b) => a.delay - b.delay);
+
+    const petalColors = ['#f472b6', '#fb7185', '#fda4af', '#fbcfe8', '#fde047', '#38bdf8', '#ffffff'];
+    for (let i = 0; i < 80; i++) {
+      petals.push({
+        x: Math.random() * width,
+        y: Math.random() * height - 50,
+        vx: (Math.random() - 0.5) * 3,
+        vy: Math.random() * 2 + 1.5,
+        size: Math.random() * 10 + 8,
+        angle: Math.random() * Math.PI * 2,
+        angleSpeed: (Math.random() - 0.5) * 0.04,
+        tilt: Math.random() * Math.PI,
+        tiltSpeed: Math.random() * 0.05 + 0.02,
+        color: petalColors[Math.floor(Math.random() * petalColors.length)],
+        delay: Math.random() * 400 + 100
+      });
+    }
+
+    if (!animationId) loop();
+  }
+
   function loop(now) {
     if (!isRunning) return;
     animationId = requestAnimationFrame(loop);
@@ -717,17 +824,23 @@ const flowerBloomEngine = (function() {
 
     let globalAlpha = 1;
     let fadeOffset = 0;
-    if (elapsed > 2700) {
-      const fProg = Math.min(1, (elapsed - 2700) / 1500);
-      globalAlpha = 1 - fProg;
-      fadeOffset = fProg * fProg * 80;
+    if (elapsed > 2500) {
+      const fProg = Math.min(1, (elapsed - 2500) / 1500);
+      globalAlpha = Math.max(0, 1 - fProg);
+      // Плавно сползаем вниз с мягким ускорением
+      fadeOffset = fProg * fProg * (height * 0.45 + 160);
     }
 
-    if (elapsed > 4300) {
+    if (elapsed > 4050) {
       isRunning = false;
       cancelAnimationFrame(animationId);
       animationId = null;
       ctx.clearRect(0, 0, width, height);
+      if (typeof onCompleteCallback === 'function') {
+        const cb = onCompleteCallback;
+        onCompleteCallback = null;
+        cb();
+      }
       return;
     }
 
@@ -742,8 +855,9 @@ const flowerBloomEngine = (function() {
       if (bloomProgress <= 0) return;
 
       ctx.save();
-      const currentY = f.y - fadeOffset * 0.7;
-      ctx.translate(f.x + (fadeOffset > 0 ? f.driftX * (fadeOffset / 80) : 0), currentY);
+      const currentY = f.y + fadeOffset;
+      const currentX = f.x + (fadeOffset > 0 ? f.driftX * (fadeOffset / 150) : 0);
+      ctx.translate(currentX, currentY);
 
       f.rotation += f.rotSpeed;
       ctx.rotate(f.rotation);
@@ -777,7 +891,7 @@ const flowerBloomEngine = (function() {
       p.tilt += p.tiltSpeed;
 
       ctx.save();
-      ctx.translate(p.x, p.y - fadeOffset);
+      ctx.translate(p.x, p.y + fadeOffset * 1.15);
       ctx.rotate(p.angle);
       ctx.scale(Math.cos(p.tilt), 1);
 
@@ -1520,8 +1634,9 @@ function initIntro() {
       oy = rect.top + rect.height / 2;
     }
 
-    flowerBloomEngine.launchBloom(ox, oy);
-    soundEngine.startMelody();
+    flowerBloomEngine.launchBloom(ox, oy, () => {
+      soundEngine.startMelody();
+    });
 
     overlay.classList.add('fade-out');
     setTimeout(() => {
