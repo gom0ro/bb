@@ -130,13 +130,13 @@ const quizQuestions = [
   {
     q: 'Где мы с тобой впервые познакомились и списались?',
     options: [
-      { text: 'В Mobile Legends (мобла)', correct: true },
+      { text: 'В Мобле', correct: true },
       { text: 'Под комментарием в тт', correct: false },
       { text: 'В социальных сетях', correct: false },
       { text: 'Случайно в очереди за кофе', correct: false }
     ],
-    explanation: 'Да, в Mobile Legends! 13 января ты написала: «Ты с моблы правильно же?»',
-    wrongExplanation: 'Почти, но нет! Мы познакомились в Mobile Legends'
+    explanation: 'Да, мы познакомились в мобле',
+    wrongExplanation: 'Неп, мы с тобой познакомились в Мобле'
   },
   {
     q: 'Как ты думаешь, какое прозвище мне нравится больше?',
@@ -147,7 +147,7 @@ const quizQuestions = [
       { text: '«Солнышко»', correct: false }
     ],
     explanation: 'Да, ты как миньончик',
-    wrongExplanation: 'Не угадала! Больше всего мне нравится «Ясминьон»'
+    wrongExplanation: 'Не угадала,больше всего мне нравится «Ясминьон»'
   },
   {
     q: 'Какая фраза от Тимура звучала в нашем чате чаще всего ?',
@@ -157,8 +157,8 @@ const quizQuestions = [
       { text: '«Я пошел спать»', correct: false },
       { text: '«Где тиммейты?!»', correct: false }
     ],
-    explanation: 'Конечно же «Приятного аппетита!»',
-    wrongExplanation: 'Мимо! Чаще всего в чате звучало «Приятного аппетита!»'
+    explanation: 'Конечно же «Приятного аппетита»',
+    wrongExplanation: 'Мимо! Чаще всего в чате звучало «Приятного аппетита»'
   },
   {
     q: 'В какую вторую игру кроме моблы мы вместе периодически залетаем?',
@@ -168,8 +168,8 @@ const quizQuestions = [
       { text: 'Genshin Impact', correct: false },
       { text: 'PUBG Mobile', correct: false }
     ],
-    explanation: 'Да, это Роблокс!',
-    wrongExplanation: 'Не-а, мы же вместе залетаем в Роблокс!'
+    explanation: 'Да, это Роплакс',
+    wrongExplanation: 'Не-а, это Роплакс'
   },
   {
     q: 'Примерно сколько сообщений в нашем с тобой чате?',
