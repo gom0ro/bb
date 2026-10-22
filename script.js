@@ -135,7 +135,7 @@ const quizQuestions = [
       { text: 'В социальных сетях', correct: false },
       { text: 'Случайно в очереди за кофе', correct: false }
     ],
-    explanation: 'Да, 13 января 2026 ты написала в ТГ: «Ты с моблы правильно же?»'
+    explanation: 'Да 😽'
   },
   {
     q: 'Как ты думаешь, какое прозвище мне нравится больше?',
@@ -145,37 +145,37 @@ const quizQuestions = [
       { text: '«Шалость»', correct: false },
       { text: '«Солнышко»', correct: false }
     ],
-    explanation: 'Да, именно: «Привет, ясминьон, погли играти»'
+    explanation: 'Да, ты как миньончик '
   },
   {
-    q: 'Какая фраза от Тимура звучала в нашем чате чаще всего (более 30 раз)?',
+    q: 'Какая фраза от Тимура звучала в нашем чате чаще всего ?',
     options: [
       { text: '«Приятного аппетита!»', correct: true },
       { text: '«Скинь домашку»', correct: false },
       { text: '«Я пошел спать»', correct: false },
       { text: '«Где тиммейты?!»', correct: false }
     ],
-    explanation: 'Каждый раз, когда ты упоминала еду или готовку, обязательно звучало «Приятного аппетита!»'
+    explanation: 'Конечно же «Приятного аппетита!»'
   },
   {
     q: 'В какую вторую игру кроме моблы мы вместе периодически залетаем?',
     options: [
-      { text: 'Brawl Stars', correct: true },
+      { text: 'Roblox', correct: true },
+      { text: 'Brawl Stars', correct: false },
       { text: 'Genshin Impact', correct: false },
-      { text: 'PUBG Mobile', correct: false },
-      { text: 'Roblox', correct: false }
+      { text: 'PUBG Mobile', correct: false }
     ],
-    explanation: 'Да, в Brawl Stars: «Ты в бравл играешь? Пошли играть!»'
+    explanation: 'Да, это Роплакс'
   },
   {
     q: 'Примерно сколько сообщений в нашем с тобой чате?',
     options: [
       { text: '3 758', correct: true },
-      { text: '1 200', correct: false },
-      { text: '5 600', correct: false },
+      { text: '1 221', correct: false },
+      { text: '5 642', correct: false },
       { text: '800', correct: false }
     ],
-    explanation: 'Три тысячи семьсот пятьдесят восемь. Это много или мало — решай сама.'
+    explanation: 'Вроде много, но на самом деле не так уж и много 😽'
   }
 ];
 
