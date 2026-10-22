@@ -79,7 +79,7 @@ body {
   height: 3.5em;
 }
 
-#fireworks-canvas, #stars-canvas {
+#fireworks-canvas, #stars-canvas, #flowers-canvas {
   position: fixed;
   top: 0;
   left: 0;
@@ -91,6 +91,10 @@ body {
 
 #stars-canvas {
   z-index: 0;
+}
+
+#flowers-canvas {
+  z-index: 10001;
 }
 
 

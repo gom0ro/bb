@@ -329,6 +329,473 @@ const fireworksEngine = (function() {
 })();
 
 
+const flowerBloomEngine = (function() {
+  let canvas, ctx, width, height;
+  let flowers = [];
+  let petals = [];
+  let animationId = null;
+  let startTimestamp = 0;
+  let isRunning = false;
+
+  function init() {
+    canvas = document.getElementById('flowers-canvas');
+    if (!canvas) return;
+    ctx = canvas.getContext('2d');
+    resize();
+    window.addEventListener('resize', resize);
+  }
+
+  function resize() {
+    if (!canvas) return;
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  }
+
+  function easeOutBack(x) {
+    const c1 = 1.6;
+    const c3 = c1 + 1;
+    return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2);
+  }
+
+  function drawPeony(ctx, r, bloom, variant) {
+    let palette;
+    if (variant === 1) {
+      palette = [
+        { base: '#f2e8e1', tip: '#fffaf5' },
+        { base: '#fcd5ce', tip: '#ffffff' },
+        { base: '#fae1dd', tip: '#ffffff' },
+        { base: '#fee2e2', tip: '#fff5f5' }
+      ];
+    } else if (variant === 2) {
+      palette = [
+        { base: '#9f1239', tip: '#e11d48' },
+        { base: '#be123c', tip: '#f43f5e' },
+        { base: '#e11d48', tip: '#fb7185' },
+        { base: '#f43f5e', tip: '#fda4af' }
+      ];
+    } else if (variant === 3) {
+      palette = [
+        { base: '#e11d48', tip: '#fb7185' },
+        { base: '#f43f5e', tip: '#fda4af' },
+        { base: '#fb923c', tip: '#fed7aa' },
+        { base: '#fbcfe8', tip: '#fff1f2' }
+      ];
+    } else {
+      palette = [
+        { base: '#be185d', tip: '#f43f5e' },
+        { base: '#db2777', tip: '#fb7185' },
+        { base: '#ec4899', tip: '#f472b6' },
+        { base: '#f472b6', tip: '#fbcfe8' }
+      ];
+    }
+
+    const layers = [
+      { count: 8, len: r * 0.98, w: r * 0.46, delay: 0 },
+      { count: 7, len: r * 0.78, w: r * 0.40, delay: 0.15 },
+      { count: 6, len: r * 0.58, w: r * 0.34, delay: 0.3 },
+      { count: 5, len: r * 0.38, w: r * 0.28, delay: 0.45 }
+    ];
+
+    layers.forEach((layer, lIdx) => {
+      const layerBloom = Math.min(1, Math.max(0, (bloom - layer.delay) / (1 - layer.delay)));
+      if (layerBloom <= 0) return;
+
+      const layerScale = easeOutBack(layerBloom);
+      const len = layer.len * layerScale;
+      const w = layer.w * layerScale;
+      const colors = palette[lIdx] || palette[0];
+
+      for (let i = 0; i < layer.count; i++) {
+        ctx.save();
+        ctx.rotate((i / layer.count) * Math.PI * 2 + lIdx * 0.35);
+
+        const grad = ctx.createLinearGradient(0, 0, 0, -len);
+        grad.addColorStop(0, colors.base);
+        grad.addColorStop(1, colors.tip);
+        ctx.fillStyle = grad;
+
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(-w * 0.55, -len * 0.35, -w * 0.85, -len * 0.8, -w * 0.25, -len);
+        ctx.bezierCurveTo(0, -len * 1.05, w * 0.25, -len, w * 0.85, -len * 0.8);
+        ctx.bezierCurveTo(w * 0.55, -len * 0.35, 0, 0, 0, 0);
+        ctx.fill();
+
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+
+        ctx.restore();
+      }
+    });
+
+    if (bloom > 0.4) {
+      const cScale = Math.min(1, (bloom - 0.4) / 0.6);
+      const cR = r * 0.18 * cScale;
+
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath();
+      ctx.arc(0, 0, cR, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#fbbf24';
+      for (let i = 0; i < 12; i++) {
+        const a = (i / 12) * Math.PI * 2;
+        const d = cR * 0.75;
+        ctx.beginPath();
+        ctx.arc(Math.cos(a) * d, Math.sin(a) * d, Math.max(1, 1.8 * cScale), 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
+  function drawSunflower(ctx, r, bloom) {
+    const petalCount = 18;
+    const len = r * 0.95 * easeOutBack(bloom);
+    const w = r * 0.16 * easeOutBack(bloom);
+
+    for (let i = 0; i < petalCount; i++) {
+      ctx.save();
+      ctx.rotate((i / petalCount) * Math.PI * 2);
+
+      const grad = ctx.createLinearGradient(0, 0, 0, -len);
+      grad.addColorStop(0, '#d97706');
+      grad.addColorStop(0.3, '#f59e0b');
+      grad.addColorStop(1, '#fde047');
+      ctx.fillStyle = grad;
+
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.quadraticCurveTo(-w, -len * 0.55, 0, -len);
+      ctx.quadraticCurveTo(w, -len * 0.55, 0, 0);
+      ctx.fill();
+
+      ctx.strokeStyle = 'rgba(180, 83, 9, 0.35)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(0, -len * 0.85);
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    const cScale = Math.min(1, bloom);
+    const cR = r * 0.42 * cScale;
+    const cGrad = ctx.createRadialGradient(0, 0, cR * 0.15, 0, 0, cR);
+    cGrad.addColorStop(0, '#261205');
+    cGrad.addColorStop(0.7, '#451a03');
+    cGrad.addColorStop(1, '#78350f');
+    ctx.fillStyle = cGrad;
+    ctx.beginPath();
+    ctx.arc(0, 0, cR, 0, Math.PI * 2);
+    ctx.fill();
+
+    if (bloom > 0.5) {
+      ctx.fillStyle = '#fbbf24';
+      for (let i = 0; i < 22; i++) {
+        const a = (i / 22) * Math.PI * 2 + (i % 2) * 0.15;
+        const d = cR * (0.35 + (i % 3) * 0.2);
+        ctx.beginPath();
+        ctx.arc(Math.cos(a) * d, Math.sin(a) * d, 1.3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
+  function drawBlueBlossom(ctx, r, bloom) {
+    const count = 6;
+    const len = r * 0.95 * easeOutBack(bloom);
+    const w = r * 0.48 * easeOutBack(bloom);
+
+    for (let i = 0; i < count; i++) {
+      ctx.save();
+      ctx.rotate((i / count) * Math.PI * 2);
+
+      const grad = ctx.createRadialGradient(0, -len * 0.5, len * 0.05, 0, -len * 0.5, len * 0.8);
+      grad.addColorStop(0, '#bae6fd');
+      grad.addColorStop(0.4, '#38bdf8');
+      grad.addColorStop(0.85, '#0284c7');
+      grad.addColorStop(1, '#0369a1');
+      ctx.fillStyle = grad;
+
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(-w * 0.5, -len * 0.3, -w * 0.65, -len * 0.85, 0, -len);
+      ctx.bezierCurveTo(w * 0.65, -len * 0.85, w * 0.5, -len * 0.3, 0, 0);
+      ctx.fill();
+
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    const cScale = Math.min(1, bloom);
+    const cR = r * 0.24 * cScale;
+    ctx.fillStyle = '#082f49';
+    ctx.beginPath();
+    ctx.arc(0, 0, cR, 0, Math.PI * 2);
+    ctx.fill();
+
+    if (bloom > 0.5) {
+      ctx.strokeStyle = '#e0f2fe';
+      ctx.lineWidth = 1;
+      for (let i = 0; i < 14; i++) {
+        const a = (i / 14) * Math.PI * 2;
+        const outerD = cR * 1.35;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(Math.cos(a) * outerD, Math.sin(a) * outerD);
+        ctx.stroke();
+
+        ctx.fillStyle = '#fde047';
+        ctx.beginPath();
+        ctx.arc(Math.cos(a) * outerD, Math.sin(a) * outerD, 1.6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
+  function drawSakura(ctx, r, bloom) {
+    const count = 5;
+    const len = r * 0.95 * easeOutBack(bloom);
+    const w = r * 0.42 * easeOutBack(bloom);
+
+    for (let i = 0; i < count; i++) {
+      ctx.save();
+      ctx.rotate((i / count) * Math.PI * 2);
+
+      const grad = ctx.createLinearGradient(0, 0, 0, -len);
+      grad.addColorStop(0, '#f472b6');
+      grad.addColorStop(0.7, '#fbcfe8');
+      grad.addColorStop(1, '#fff1f2');
+      ctx.fillStyle = grad;
+
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(-w, -len * 0.4, -w * 0.9, -len, -w * 0.25, -len);
+      ctx.lineTo(0, -len * 0.85);
+      ctx.lineTo(w * 0.25, -len);
+      ctx.bezierCurveTo(w * 0.9, -len, w, -len * 0.4, 0, 0);
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    if (bloom > 0.4) {
+      const cScale = Math.min(1, (bloom - 0.4) / 0.6);
+      ctx.strokeStyle = '#e11d48';
+      ctx.lineWidth = 1;
+      for (let i = 0; i < 10; i++) {
+        const a = (i / 10) * Math.PI * 2;
+        const d = r * 0.28 * cScale;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(Math.cos(a) * d, Math.sin(a) * d);
+        ctx.stroke();
+
+        ctx.fillStyle = '#fbbf24';
+        ctx.beginPath();
+        ctx.arc(Math.cos(a) * d, Math.sin(a) * d, 1.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
+  function launchBloom(originX, originY) {
+    if (!canvas) init();
+    if (!canvas) return;
+
+    resize();
+    flowers = [];
+    petals = [];
+    isRunning = true;
+    startTimestamp = performance.now();
+
+    const ox = originX || width / 2;
+    const oy = originY || height / 2;
+
+    const types = [
+      { type: 'peony', variant: 0 },
+      { type: 'peony', variant: 1 },
+      { type: 'peony', variant: 2 },
+      { type: 'peony', variant: 3 },
+      { type: 'sunflower' },
+      { type: 'blue' },
+      { type: 'sakura' }
+    ];
+
+    const cols = Math.max(7, Math.floor(width / 110));
+    const rows = Math.max(8, Math.floor(height / 110));
+    const cellW = width / cols;
+    const cellH = height / rows;
+
+    for (let c = 0; c < cols; c++) {
+      for (let r = 0; r < rows; r++) {
+        const cx = (c + 0.5) * cellW + (Math.random() - 0.5) * cellW * 0.75;
+        const cy = (r + 0.5) * cellH + (Math.random() - 0.5) * cellH * 0.75;
+
+        const dist = Math.hypot(cx - ox, cy - oy);
+        const maxDist = Math.hypot(width, height);
+        const delay = (dist / maxDist) * 750 + Math.random() * 120;
+
+        const tObj = types[Math.floor(Math.random() * types.length)];
+        const baseR = Math.random() * 32 + 42;
+
+        flowers.push({
+          x: cx,
+          y: cy,
+          r: baseR,
+          rotation: Math.random() * Math.PI * 2,
+          rotSpeed: (Math.random() - 0.5) * 0.008,
+          phase: Math.random() * Math.PI * 2,
+          delay: delay,
+          duration: Math.random() * 200 + 480,
+          type: tObj.type,
+          variant: tObj.variant || 0,
+          driftX: (Math.random() - 0.5) * 20,
+          driftY: -Math.random() * 40 - 10
+        });
+      }
+    }
+
+    const extraCount = Math.floor(cols * rows * 0.35);
+    for (let i = 0; i < extraCount; i++) {
+      const cx = Math.random() * width;
+      const cy = Math.random() * height;
+      const dist = Math.hypot(cx - ox, cy - oy);
+      const delay = (dist / Math.hypot(width, height)) * 650 + Math.random() * 200;
+      const tObj = types[Math.floor(Math.random() * types.length)];
+      const baseR = Math.random() * 40 + 55;
+
+      flowers.push({
+        x: cx,
+        y: cy,
+        r: baseR,
+        rotation: Math.random() * Math.PI * 2,
+        rotSpeed: (Math.random() - 0.5) * 0.008,
+        phase: Math.random() * Math.PI * 2,
+        delay: delay,
+        duration: Math.random() * 200 + 500,
+        type: tObj.type,
+        variant: tObj.variant || 0,
+        driftX: (Math.random() - 0.5) * 25,
+        driftY: -Math.random() * 50 - 15
+      });
+    }
+
+    flowers.sort((a, b) => a.delay - b.delay);
+
+    const petalColors = ['#f472b6', '#fb7185', '#fda4af', '#fbcfe8', '#fde047', '#38bdf8', '#ffffff'];
+    for (let i = 0; i < 80; i++) {
+      petals.push({
+        x: Math.random() * width,
+        y: Math.random() * height - 50,
+        vx: (Math.random() - 0.5) * 3,
+        vy: Math.random() * 2 + 1.5,
+        size: Math.random() * 10 + 8,
+        angle: Math.random() * Math.PI * 2,
+        angleSpeed: (Math.random() - 0.5) * 0.04,
+        tilt: Math.random() * Math.PI,
+        tiltSpeed: Math.random() * 0.05 + 0.02,
+        color: petalColors[Math.floor(Math.random() * petalColors.length)],
+        delay: Math.random() * 400 + 100
+      });
+    }
+
+    if (!animationId) loop();
+  }
+
+  function loop(now) {
+    if (!isRunning) return;
+    animationId = requestAnimationFrame(loop);
+
+    const elapsed = (now || performance.now()) - startTimestamp;
+    ctx.clearRect(0, 0, width, height);
+
+    let globalAlpha = 1;
+    let fadeOffset = 0;
+    if (elapsed > 2700) {
+      const fProg = Math.min(1, (elapsed - 2700) / 1500);
+      globalAlpha = 1 - fProg;
+      fadeOffset = fProg * fProg * 80;
+    }
+
+    if (elapsed > 4300) {
+      isRunning = false;
+      cancelAnimationFrame(animationId);
+      animationId = null;
+      ctx.clearRect(0, 0, width, height);
+      return;
+    }
+
+    ctx.save();
+    ctx.globalAlpha = globalAlpha;
+
+    flowers.forEach(f => {
+      if (elapsed < f.delay) return;
+
+      const fElapsed = elapsed - f.delay;
+      const bloomProgress = Math.min(1, fElapsed / f.duration);
+      if (bloomProgress <= 0) return;
+
+      ctx.save();
+      const currentY = f.y - fadeOffset * 0.7;
+      ctx.translate(f.x + (fadeOffset > 0 ? f.driftX * (fadeOffset / 80) : 0), currentY);
+
+      f.rotation += f.rotSpeed;
+      ctx.rotate(f.rotation);
+
+      let breath = 1;
+      if (bloomProgress >= 1) {
+        breath = 1 + Math.sin(elapsed * 0.003 + f.phase) * 0.025;
+      }
+
+      ctx.scale(breath, breath);
+
+      if (f.type === 'sunflower') {
+        drawSunflower(ctx, f.r, bloomProgress);
+      } else if (f.type === 'blue') {
+        drawBlueBlossom(ctx, f.r, bloomProgress);
+      } else if (f.type === 'sakura') {
+        drawSakura(ctx, f.r, bloomProgress);
+      } else {
+        drawPeony(ctx, f.r, bloomProgress, f.variant);
+      }
+
+      ctx.restore();
+    });
+
+    petals.forEach(p => {
+      if (elapsed < p.delay) return;
+
+      p.x += p.vx;
+      p.y += p.vy;
+      p.angle += p.angleSpeed;
+      p.tilt += p.tiltSpeed;
+
+      ctx.save();
+      ctx.translate(p.x, p.y - fadeOffset);
+      ctx.rotate(p.angle);
+      ctx.scale(Math.cos(p.tilt), 1);
+
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, p.size * 0.5, p.size, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+    });
+
+    ctx.restore();
+  }
+
+  return { init, launchBloom };
+})();
+
+
 const soundEngine = (function() {
   function getCtx() {
     if (!state.audioContext) {
@@ -1040,10 +1507,20 @@ function initIntro() {
   const giftTrigger = document.getElementById('gift-trigger');
   const mainContent = document.getElementById('main-content');
 
-  function openGift() {
+  function openGift(e) {
     siteLogger.logAction('Открыла подарок (нажала кнопку)');
     soundEngine.playFanfare();
-    fireworksEngine.launchGrandSalute();
+
+    let ox = window.innerWidth / 2;
+    let oy = window.innerHeight / 2;
+    const targetEl = (e && e.currentTarget) || startBtn || giftTrigger;
+    if (targetEl && targetEl.getBoundingClientRect) {
+      const rect = targetEl.getBoundingClientRect();
+      ox = rect.left + rect.width / 2;
+      oy = rect.top + rect.height / 2;
+    }
+
+    flowerBloomEngine.launchBloom(ox, oy);
     soundEngine.startMelody();
 
     overlay.classList.add('fade-out');
@@ -1080,6 +1557,7 @@ function initControls() {
 document.addEventListener('DOMContentLoaded', () => {
   initStars();
   fireworksEngine.init();
+  flowerBloomEngine.init();
   siteLogger.startSession();
   siteLogger.logAction('Открыла страницу поздравления');
   initIntro();
